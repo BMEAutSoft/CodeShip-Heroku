@@ -6,7 +6,7 @@ var serverState = 'inactive';
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
-app.get('/server_state', function (request, response) {
+app.get('/serverState', function (request, response) {
     writeServerState(response);
 });
 
@@ -16,7 +16,7 @@ function writeServerState(response) {
     var json = JSON.stringify(jsonObject);
     response.end(json);
 }
-app.post('/server_state', function (request, response) {
+app.post('/serverState', function (request, response) {
     var body = '';
     request.on('data', function (data) {
         body += data;
@@ -30,6 +30,10 @@ app.post('/server_state', function (request, response) {
         }
         writeServerState(response);
     });
+});
+
+app.get('/currentTimestamp', function (request, response) {
+    response.send('' + Date.now());
 });
 
 app.get('/', function (request, response) {
